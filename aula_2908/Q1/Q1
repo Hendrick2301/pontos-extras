@@ -1,0 +1,36 @@
+    .data
+array:  .word 4, 9, 2, 7, 5       
+
+    .text
+    .globl main
+
+findMax:
+    
+    lw $t0, array         
+
+    # Percorre os elementos do vetor
+    li $t1, 1             
+loop:
+    bge $t1, 5, endLoop  
+
+    lw $t2, array($t1)    
+
+    bgt $t2, $t0, updateMax  
+
+    addi $t1, $t1, 1    
+    j loop              
+
+updateMax:
+    move $t0, $t2         
+    addi $t1, $t1, 1     
+    j loop                
+
+endLoop:
+    jr $ra               
+
+main:
+
+    jal findMax
+    li $v0, 10           
+    syscall
+
